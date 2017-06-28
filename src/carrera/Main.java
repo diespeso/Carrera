@@ -21,7 +21,26 @@ public class Main {
             posicionarTortuga(pista, tortuga);
             morder(pista, liebre, tortuga);
             imprimirPista(pista);
+            darVeredicto(liebre, tortuga);
         }
+    }
+
+    private static void darVeredicto(Liebre liebre, Tortuga tortuga) {
+        if(isEmpate(liebre, tortuga)) {
+            mostrarMensajeEmpate();
+        } else if(isLiebreGano(liebre)) {
+            mostrarVictoriaLiebre();
+        } else if(isTortugaGano(tortuga)) {
+            mostrarVictoriaTortuga();
+        }
+    }
+
+    private static void mostrarMensajeEmpate() {
+        System.out.println("Es un empate");
+    }
+
+    private static boolean isEmpate(Liebre liebre, Tortuga tortuga) {
+        return isLiebreGano(liebre) && isTortugaGano(tortuga);
     }
 
     private static void morder(String[] pista, Liebre liebre, Tortuga tortuga) {
@@ -64,17 +83,28 @@ public class Main {
 
     private static boolean isContinuar(Liebre liebre, Tortuga tortuga) {
         boolean continuar = true;
-        if(isLiebreGano(liebre) || isTortugaGano(tortuga)) {
+        if(isEmpate(liebre, tortuga)) {
+            continuar = false;
+        } else if (isTortugaGano(tortuga)) {
+            continuar = false;
+        } else if(isLiebreGano(liebre)) {
             continuar = false;
         }
         return continuar;
+    }
+
+    private static void mostrarVictoriaLiebre() {
+        System.out.println("La liebre gana, qué lástima");
+    }
+
+    private static void mostrarVictoriaTortuga() {
+        System.out.println("La tortuga gana, yay");
     }
 
     private static boolean isLiebreGano(Liebre liebre) {
         boolean gano = false;
         if(liebre.getPosicionActual() == 70) {
             gano = true;
-            System.out.println("La liebre gana, que lástima");
         }
         return gano;
     }
@@ -83,7 +113,6 @@ public class Main {
         boolean gano = false;
         if(tortuga.getPosicionActual() == 70) {
             gano = true;
-            System.out.println("La tortuga gana, yay");
         }
         return gano;
     }
