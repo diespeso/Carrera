@@ -24,6 +24,9 @@ class Tortuga {
         } else if(8 <= aleatorio && aleatorio <= 10) {
             darPasoLento();
         }
+        if(isPosicionIlegal()) {
+            legalizarPosicionActual();
+        }
     }
 
     private void darPasoRapido() {
@@ -43,28 +46,26 @@ class Tortuga {
 
     private void aumentarPosicionActual(int posiciones) {
         posicionActual += posiciones;
-        if(posicionActual > 70) {
-            posicionActual = 70;
-        }
     }
 
     private void disminuirPosicionActual(int posiciones) {
         posicionActual -= posiciones;
-        if(isPosicionIlegal()) {
-            legalizarPosicionActual();
-        }
     }
 
     private boolean isPosicionIlegal() {
         boolean ilegal = false;
-        if(posicionActual <= 0) {
+        if(posicionActual < 0 || posicionActual > 70) {
             ilegal = true;
         }
         return ilegal;
     }
 
     private void legalizarPosicionActual() {
-        posicionActual = 1;
+        if(posicionActual < 0){
+            posicionActual = 1;
+        } else if(posicionActual > 70) {
+            posicionActual = 70;
+        }
     }
 
     int getPosicionActual() {

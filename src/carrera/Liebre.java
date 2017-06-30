@@ -28,6 +28,9 @@ class Liebre {
         } else if(aleatorio >= 9 && aleatorio <= 10) {
             darPequenoResbalon();
         }
+        if(isPosicionIlegal()) {
+            legalizarPosicionActual();
+        }
     }
 
     private void dormir() {
@@ -56,28 +59,26 @@ class Liebre {
 
     private void aumentarPosicionActual(int posiciones) {
         posicionActual += posiciones;
-        if(posicionActual > 70) {
-            posicionActual = 70;
-        }
     }
 
     private void disminuirPosicionActual(int posiciones) {
         posicionActual -= posiciones;
-        if(isPosicionIlegal()) {
-            legalizarPosicionActual();
-        }
     }
 
     private boolean isPosicionIlegal() {
         boolean ilegal = false;
-        if(posicionActual <= 0) {
+        if(posicionActual < 0 || posicionActual > 70) {
             ilegal = true;
         }
         return ilegal;
     }
 
     private void legalizarPosicionActual() {
-        posicionActual = 1;
+        if(posicionActual > 70) {
+            posicionActual = 70;
+        } else if(posicionActual < 0) {
+            posicionActual = 0;
+        }
     }
 
     int getPosicionActual() {
